@@ -16,8 +16,7 @@ class ClientRepository implements IClientRepository {
   ) {}
 
   async create(data: CreateClientInput) {
-    const firstPartnerPassword = Math.floor(1000 + Math.random() * 9000).toString();
-
+    const firstPartnerPassword = data.password ?? Math.floor(1000 + Math.random() * 9000).toString();
     const isClientRepeted = await this.prisma.client.findUnique({
       where: {
         email: data.email,

@@ -7,6 +7,7 @@ import { FindAllParnerstInput } from './dto/find-all-partners.input';
 import { UpdatePasswordPartnerInput } from './dto/update-password-partner.input';
 import { PartnerRepository } from 'src/repositories/partner.repository';
 import { FindClientsPartnerInput } from './dto/find-clients-partner.input';
+import { FindPartnerByRegisterCode } from './dto/find-partner-by-register-code.input';
 
 @Injectable()
 export class PartnersService {
@@ -50,5 +51,10 @@ export class PartnersService {
     );
     const clients = await this.partnerRepository.findClientsPartner(data);
     return clients;
+  }
+
+  async findByRegisterCode(data: FindPartnerByRegisterCode) {
+    const partner = await this.partnerRepository.findByRegisterCode(data);
+    return partner;
   }
 }

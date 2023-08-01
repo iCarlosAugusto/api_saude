@@ -8,6 +8,7 @@ import { FindAllParnerstInput } from '../api/partners/dto/find-all-partners.inpu
 import { UpdatePasswordPartnerInput } from '../api/partners/dto/update-password-partner.input';
 import { EmailService } from 'src/utils/email.service';
 import { FindClientsPartnerInput } from 'src/api/partners/dto/find-clients-partner.input';
+import { FindPartnerByRegisterCode } from 'src/api/partners/dto/find-partner-by-register-code.input';
 
 @Injectable()
 export class PartnerRepository {
@@ -24,14 +25,11 @@ export class PartnerRepository {
     const partner = await this.prisma.partner.create({
       data: {
         identification: data.identification,
+        regiterCode: data.registerCode,
         password: firstPartnerPassword,
         email: data.email,
         name: data.name,
         phoneNumber: data.phoneNumber,
-        address: data.address,
-        jobDescription: data.jobDescription,
-        servicePrice: data.servicePrice,
-        specialties: data.specialties,
       },
     });
     await this.emailService.sendEmailToResetPassword({
@@ -45,10 +43,6 @@ export class PartnerRepository {
     const partnerUpdated = await this.prisma.partner.update({
       where: { id: data.id },
       data: {
-        address: data.address,
-        jobDescription: data.jobDescription,
-        servicePrice: data.servicePrice,
-        specialties: data.specialties,
         email: data.email,
         name: data.name,
         phoneNumber: data.phoneNumber,
@@ -97,6 +91,16 @@ export class PartnerRepository {
       take: 10,
     });
     return partners;
+  }
+
+  async findByRegisterCode({ code }: FindPartnerByRegisterCode) {
+    const partner = await this.prisma.partner.findUnique({
+      where: {
+        regiterCode: code
+      }
+    });
+
+    return partner;
   }
 
   //REFAZER

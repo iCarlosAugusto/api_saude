@@ -12,15 +12,12 @@ model Partner {
   id             String    @id @default(uuid())
   createdAt      DateTime  @default(now())
   identification String    @unique
+  regiterCode    String    @unique
   name           String
   email          String
   photo          String?
   password       String
-  specialties    String
-  address        String
   phoneNumber    String
-  servicePrice   String
-  jobDescription String
   companies      Company[]
   clients        Client[]
   consults       Consult[]

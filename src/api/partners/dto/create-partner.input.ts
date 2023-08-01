@@ -15,6 +15,10 @@ export class CreatePartnerInput {
   @Field(() => String)
   email: string;
 
+  @IsString()
+  @Field(() => String)
+  registerCode: string;
+
   @IsNotEmpty({ message: 'A senha é obrigatório' })
   @Field(() => String)
   password: string;
@@ -26,20 +30,4 @@ export class CreatePartnerInput {
   @IsNotEmpty({ message: 'O número é obrigatória' })
   @Field(() => String)
   phoneNumber: string;
-  
-  @IsNotEmpty({ message: 'A specialties é obrigatória' })
-  @Field(() => String)
-  specialties: string;
-
-  @IsNotEmpty({ message: 'O endereço é obrigatória' })
-  @Field(() => String)
-  address: string;
-
-  @IsNotEmpty({ message: 'O preço do serviço é obrigatório' })
-  @Field(() => String)
-  servicePrice: string;
-
-  @IsNotEmpty({ message: 'A descrição do trabalho é obrigatória' })
-  @Field(() => String)
-  jobDescription: string;
 }

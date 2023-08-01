@@ -8,6 +8,7 @@ import { FindAllParnerstInput } from './dto/find-all-partners.input';
 import { UpdatePasswordPartnerInput } from './dto/update-password-partner.input';
 import { ClientEntity } from '../users/entities/client.entity';
 import { FindClientsPartnerInput } from './dto/find-clients-partner.input';
+import { FindPartnerByRegisterCode } from './dto/find-partner-by-register-code.input';
 
 @Resolver(() => PartnerEntity)
 export class PartnersResolver {
@@ -41,5 +42,10 @@ export class PartnersResolver {
   @Query(() => [ ClientEntity ], { nullable: true })
   findAllClientsPartner(@Args('findAllClientsPartnerInput') findAllClientsPartnerInput: FindClientsPartnerInput) {
     return this.partnersService.findClientsPartner(findAllClientsPartnerInput);
+  }
+
+  @Query(() => PartnerEntity, { nullable: true})
+  findPartnerByRegisterCode(@Args('findPartnerByRegisterCodeInput') findPartnerByRegisterCode: FindPartnerByRegisterCode) {
+    return this.partnersService.findByRegisterCode(findPartnerByRegisterCode);
   }
 }
