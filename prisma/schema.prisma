@@ -59,7 +59,7 @@ model Service {
   specialitie  String
   address      String
   partnerId    String
-  bannerImage  String
+  bannerImage  String?
   startAt      String
   endAt        String
   consult      Consult[]

@@ -7,10 +7,13 @@ export class PartnerEntity {
   id: string;
 
   @Field(() => String)
+  createdAt: Date;
+
+  @Field(() => String)
   identification: string;
 
   @Field(() => String)
-  createdAt: Date;
+  registerCode: string;
 
   @Field(() => String)
   name: string;
@@ -18,20 +21,11 @@ export class PartnerEntity {
   @Field(() => String)
   email: string;
 
-  @Field(() => String)
-  specialties: string;
-
-  @Field(() => String)
-  address: string;
+  @Field(() => String, { nullable: true })
+  photo?: string;
 
   @Field(() => String)
   phoneNumber: string;
-
-  @Field(() => String)
-  servicePrice: string;
-
-  @Field(() => String)
-  jobDescription: string;
 
   @Field(() => [ConsultEntity], { nullable: true })
   consults: ConsultEntity[];

@@ -38,8 +38,8 @@ export class ServiceEntity {
   @Field(() => String)
   partnerPhoto: string;
 
-  @Field(() => String)
-  bannerImage: string;
+  @Field(() => String, {nullable: true})
+  bannerImage?: string;
 
   @Field(() => String)
   address: string;

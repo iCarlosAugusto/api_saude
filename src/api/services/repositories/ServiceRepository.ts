@@ -9,7 +9,6 @@ class ServiceRepository {
   constructor(private prisma: PrismaService) {};
 
   async create(data: CreateServiceInput) {
-    data.bannerImage
     const service = await this.prisma.service.create({ data });
     return service;
   }

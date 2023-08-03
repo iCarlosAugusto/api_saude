@@ -1,5 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 @InputType()
 export class CreateServiceInput {
@@ -21,9 +21,9 @@ export class CreateServiceInput {
   partnerId: string;
 
   @IsString()
-  @IsNotEmpty({ message: "O banner da imagem é obrigatório"})
-  @Field(() => String)
-  bannerImage: string;
+  @IsOptional()
+  @Field(() => String, { nullable: true })
+  bannerImage?: string;
 
   @IsString()
   @IsNotEmpty({ message: "O nome do parceiro responsável é obrigatório"})
