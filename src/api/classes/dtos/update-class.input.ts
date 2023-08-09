@@ -48,10 +48,11 @@ export class UpdateClassInput {
   @Field(() => String, { nullable: true })
   place: string;
 
-  @IsOptional()
   @IsString()
+  @IsOptional()
   @Field(() => String, { nullable: true })
-  bannerImage: string;
+  bannerImage?: string;
+  
 
   @IsOptional()
   @IsString()

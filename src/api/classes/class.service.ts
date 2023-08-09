@@ -21,7 +21,6 @@ export class ClassService {
   ) {}
 
   async createClass(data: CreateClassInput) {
-    console.log("aqi2")
     const company = await this.companyRepository.findOneById(data.companyId);
 
     if (!company) {

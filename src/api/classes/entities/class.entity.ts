@@ -27,8 +27,8 @@ export class ClassEntity {
   @Field(() => String)
   price: string;
 
-  @Field(() => String)
-  bannerImage: string;
+  @Field(() => String, { nullable: true })
+  bannerImage?: string;
 
   @Field(() => String)
   teacherName: string;

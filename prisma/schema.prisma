@@ -110,7 +110,7 @@ model Class {
   dateTimestamp String
   address       String
   place         String
-  bannerImage   String
+  bannerImage   String?
   teacherName   String
   companyId     String
   date          String
