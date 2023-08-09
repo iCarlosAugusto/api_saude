@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateServiceInput } from './dto/create-service.input';
-import { UpdateServiceInput } from './dto/update-service.input';
 import { ServiceRepository } from './repositories/ServiceRepository';
-import { FindAllServicesInput } from './dto/find-all-services.input';
+import { CreateServiceDto } from './dto/create-service.dto';
+import { FindAllServicesDto } from './dto/find-all-services.dto';
+import { UpdateServiceDto } from './dto/update-service.dto';
 
 @Injectable()
 export class ServicesService {
@@ -11,19 +11,19 @@ export class ServicesService {
     private serviceRepository: ServiceRepository 
   ) {}
 
-  create(createServiceInput: CreateServiceInput) {
-    return this.serviceRepository.create(createServiceInput);
+  create(createServiceDto: CreateServiceDto) {
+    return this.serviceRepository.create(createServiceDto);
   }
 
-  findAll(findAllServicesInput: FindAllServicesInput) {
-    return this.serviceRepository.findAll(findAllServicesInput)
+  findAll(findAllServicesDto: FindAllServicesDto) {
+    return this.serviceRepository.findAll(findAllServicesDto)
   }
 
   findOne(id: number) {
     return `This action returns a #${id} service`;
   }
 
-  update(id: number, updateServiceInput: UpdateServiceInput) {
+  update(id: number, updateServiceDto: UpdateServiceDto) {
     return `This action updates a #${id} service`;
   }
 

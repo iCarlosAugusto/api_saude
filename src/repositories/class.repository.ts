@@ -1,12 +1,12 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { BookClassInput } from 'src/api/classes/dtos/book-class.input';
-import { CancelClientClassInput } from 'src/api/classes/dtos/cancel-client-class.input';
-import { CreateClassInput } from 'src/api/classes/dtos/create-class.input';
-import { DeleteClassInput } from 'src/api/classes/dtos/delete-class.input';
-import { FindAllClassesInput } from 'src/api/classes/dtos/find-all-classes.input';
-import { FindAllClassesByDateInput } from 'src/api/classes/dtos/find-classes_by_date.input';
-import { FindNextClientClassInput } from 'src/api/classes/dtos/find-next-client-class.input';
-import { UpdateClassInput } from 'src/api/classes/dtos/update-class.input';
+import { BookClassDto } from 'src/api/classes/dtos/book-class.dto';
+import { CancelClientClassDto } from 'src/api/classes/dtos/cancel-client-class.dto';
+import { CreateClassDto } from 'src/api/classes/dtos/create-class.dto';
+import { DeleteClassDto } from 'src/api/classes/dtos/delete-class.dto';
+import { FindAllClassesDto } from 'src/api/classes/dtos/find-all-classes.dto';
+import { FindAllClassesByDateDto } from 'src/api/classes/dtos/find-classes_by_date.dto';
+import { FindNextClientClassDto } from 'src/api/classes/dtos/find-next-client-class.dto';
+import { UpdateClassDto } from 'src/api/classes/dtos/update-class.dto';
 import { PrismaService } from 'src/api/users/services/prima.service';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class ClassRepository {
     teacherName,
     dateTimestamp,
     date,
-  }: CreateClassInput) {
+  }: CreateClassDto) {
     return this.prisma.class.create({
       data: {
         name,
@@ -43,7 +43,7 @@ export class ClassRepository {
     });
   }
 
-  async update(data: UpdateClassInput) {
+  async update(data: UpdateClassDto) {
     const { classId, ...rest } = data;
     return await this.prisma.class.update({
       where: {
@@ -53,7 +53,7 @@ export class ClassRepository {
     });
   }
 
-  async delete({ classId }: DeleteClassInput) {
+  async delete({ classId }: DeleteClassDto) {
     await this.prisma.class.delete({
       where: {
         id: classId,
@@ -77,7 +77,7 @@ export class ClassRepository {
     date,
     clientIdentification,
     bookedClasses,
-  }: FindAllClassesInput) {
+  }: FindAllClassesDto) {
     if (clientIdentification) {
       const classes = await this.prisma.class.findMany({
         where: {
@@ -124,7 +124,7 @@ export class ClassRepository {
     return classes;
   }
 
-  async findAllClassesByDate({ companyId, date }: FindAllClassesByDateInput) {
+  async findAllClassesByDate({ companyId, date }: FindAllClassesByDateDto) {
     return this.prisma.class.findMany({
       where: {
         companyId,
@@ -136,7 +136,7 @@ export class ClassRepository {
     });
   }
 
-  async bookClass({ classId, clientId }: BookClassInput) {
+  async bookClass({ classId, clientId }: BookClassDto) {
     const isClassAlreadyBooked = await this.prisma.class.findFirst({
       where: {
         id: classId,
@@ -166,7 +166,7 @@ export class ClassRepository {
     });
   }
 
-  async findNextClientClass({ clientId }: FindNextClientClassInput) {
+  async findNextClientClass({ clientId }: FindNextClientClassDto) {
     var classes = await this.prisma.class.findMany({
       where: {
         clients: {
@@ -190,7 +190,7 @@ export class ClassRepository {
     return nextClass;
   }
 
-  async cancelClass({ classId, clientId }: CancelClientClassInput) {
+  async cancelClass({ classId, clientId }: CancelClientClassDto) {
     await this.prisma.client.update({
       where: {
         id: clientId,

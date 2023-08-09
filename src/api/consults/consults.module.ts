@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConsultsService } from './consults.service';
-import { ConsultsResolver } from './consults.resolver';
 import { PrismaService } from '../users/services/prima.service';
 import { ConsultRepository } from './repository/consult.repository';
 import { EmailService } from 'src/utils/email.service';
+import { ConsultsController } from './consults.controller';
 
 @Module({
-  providers: [ConsultsResolver, ConsultsService,  PrismaService, ConsultRepository, EmailService]
+  controllers: [ConsultsController],
+  providers: [ConsultsService, PrismaService, ConsultRepository, EmailService],
 })
 export class ConsultsModule {}
-

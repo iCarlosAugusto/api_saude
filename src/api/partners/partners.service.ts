@@ -1,59 +1,69 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreatePartnerInput } from './dto/create-partner.input';
-import { UpdatePartnerInput } from './dto/update-partner.input';
-import { FindOneParnetInput } from './dto/find-one-partner.input';
 import { Partner, Client } from '@prisma/client';
-import { FindAllParnerstInput } from './dto/find-all-partners.input';
-import { UpdatePasswordPartnerInput } from './dto/update-password-partner.input';
 import { PartnerRepository } from 'src/repositories/partner.repository';
-import { FindClientsPartnerInput } from './dto/find-clients-partner.input';
-import { FindPartnerByRegisterCode } from './dto/find-partner-by-register-code.input';
+import { FindOneParnetDto } from './dto/find-one-partner.dto';
+import { FindAllParnerstDto } from './dto/find-all-partners.dto';
+import { UpdatePartnerDto } from './dto/update-partner.dto';
+import { UpdatePasswordPartnerDto } from './dto/update-password-partner.dto';
+import { FindClientsPartnerDto } from './dto/find-clients-partner.dto';
+import { FindPartnerByRegisterCodeDto } from './dto/find-partner-by-register-code.dto';
+import { CreatePartnerDto } from './dto/create-partner.dto';
 
 @Injectable()
 export class PartnersService {
+  constructor(private partnerRepository: PartnerRepository) {}
 
-  constructor(private partnerRepository: PartnerRepository){}
-
-  async create(data: CreatePartnerInput) {
-    const partner = await this.partnerRepository.create(data); 
+  async create(data: CreatePartnerDto) {
+    const partner = await this.partnerRepository.create(data);
     return partner;
   }
 
-  async findOne(data: FindOneParnetInput){
+  async findOne(data: FindOneParnetDto) {
     const partner = await this.partnerRepository.findOneById(data);
     return partner;
   }
 
-  async findAll(data: FindAllParnerstInput){
+  async findAll(data: FindAllParnerstDto) {
     const partner = await this.partnerRepository.findAll(data);
     return partner;
   }
 
-  async update(data: UpdatePartnerInput): Promise<Partner> {
-    const partnerExists = await this.findOne({id: data.id});
-    if(!partnerExists) throw new Error("Parceiro não encontrado");
+  async update(data: UpdatePartnerDto): Promise<Partner> {
+    const partnerExists = await this.findOne({ id: data.id });
+    if (!partnerExists) throw new Error('Parceiro não encontrado');
     const partnerUpdated = await this.partnerRepository.update(data);
-    return partnerUpdated
+    return partnerUpdated;
   }
 
-  async updatePassword({ id, currentPassword, newPassword }: UpdatePasswordPartnerInput): Promise<Partner> {
-    const partnerExists = await this.partnerRepository.findOneById({id});
-    if(!partnerExists) throw new Error("Parceiro não encontrado");
-    const updatedPartnerPassword = await this.partnerRepository.updatePassword({id, currentPassword, newPassword});
+  async updatePassword({
+    id,
+    currentPassword,
+    newPassword,
+  }: UpdatePasswordPartnerDto): Promise<Partner> {
+    const partnerExists = await this.partnerRepository.findOneById({ id });
+    if (!partnerExists) throw new Error('Parceiro não encontrado');
+    const updatedPartnerPassword = await this.partnerRepository.updatePassword({
+      id,
+      currentPassword,
+      newPassword,
+    });
     return updatedPartnerPassword;
   }
 
-  async findClientsPartner(data: FindClientsPartnerInput) {
-    const partner = await this.partnerRepository.findOneById({id: data.partnerId});
-    if(!partner) throw new HttpException(
-      'Não foi possível criar a aula pelo id do parceiro fornecido',
-      HttpStatus.BAD_REQUEST,
-    );
+  async findClientsPartner(data: FindClientsPartnerDto) {
+    const partner = await this.partnerRepository.findOneById({
+      id: data.partnerId,
+    });
+    if (!partner)
+      throw new HttpException(
+        'Não foi possível criar a aula pelo id do parceiro fornecido',
+        HttpStatus.BAD_REQUEST,
+      );
     const clients = await this.partnerRepository.findClientsPartner(data);
     return clients;
   }
 
-  async findByRegisterCode(data: FindPartnerByRegisterCode) {
+  async findByRegisterCode(data: FindPartnerByRegisterCodeDto) {
     const partner = await this.partnerRepository.findByRegisterCode(data);
     return partner;
   }

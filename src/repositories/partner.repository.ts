@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/api/users/services/prima.service';
-import { CreatePartnerInput } from '../api/partners/dto/create-partner.input';
 import { Partner } from '@prisma/client';
-import { UpdatePartnerInput } from '../api/partners/dto/update-partner.input';
-import { FindOneParnetInput } from '../api/partners/dto/find-one-partner.input';
-import { FindAllParnerstInput } from '../api/partners/dto/find-all-partners.input';
-import { UpdatePasswordPartnerInput } from '../api/partners/dto/update-password-partner.input';
 import { EmailService } from 'src/utils/email.service';
-import { FindClientsPartnerInput } from 'src/api/partners/dto/find-clients-partner.input';
-import { FindPartnerByRegisterCode } from 'src/api/partners/dto/find-partner-by-register-code.input';
+import { UpdatePartnerDto } from 'src/api/partners/dto/update-partner.dto';
+import { UpdatePasswordPartnerDto } from 'src/api/partners/dto/update-password-partner.dto';
+import { FindOneParnetDto } from 'src/api/partners/dto/find-one-partner.dto';
+import { FindAllParnerstDto } from 'src/api/partners/dto/find-all-partners.dto';
+import { FindPartnerByRegisterCodeDto } from 'src/api/partners/dto/find-partner-by-register-code.dto';
+import { FindClientsPartnerDto } from 'src/api/partners/dto/find-clients-partner.dto';
+import { CreatePartnerDto } from 'src/api/partners/dto/create-partner.dto';
 
 @Injectable()
 export class PartnerRepository {
@@ -17,7 +17,7 @@ export class PartnerRepository {
     private emailService: EmailService,
   ) {}
 
-  async create(data: CreatePartnerInput): Promise<Partner> {
+  async create(data: CreatePartnerDto): Promise<Partner> {
     const firstPartnerPassword = Math.floor(
       1000 + Math.random() * 9000,
     ).toString();
@@ -39,7 +39,7 @@ export class PartnerRepository {
     return partner;
   }
 
-  async update(data: UpdatePartnerInput): Promise<Partner> {
+  async update(data: UpdatePartnerDto): Promise<Partner> {
     const partnerUpdated = await this.prisma.partner.update({
       where: { id: data.id },
       data: {
@@ -56,7 +56,7 @@ export class PartnerRepository {
     id,
     currentPassword,
     newPassword,
-  }: UpdatePasswordPartnerInput): Promise<Partner> {
+  }: UpdatePasswordPartnerDto): Promise<Partner> {
     const partner = await this.prisma.partner.findUnique({
       where: {
         id: id,
@@ -76,7 +76,7 @@ export class PartnerRepository {
     return updatedPasswordPartner;
   }
 
-  async findOneById({ id }: FindOneParnetInput): Promise<Partner> {
+  async findOneById({ id }: FindOneParnetDto): Promise<Partner> {
     const partner = await this.prisma.partner.findUnique({
       where: {
         id,
@@ -85,7 +85,7 @@ export class PartnerRepository {
     return partner;
   }
 
-  async findAll({ skip }: FindAllParnerstInput): Promise<Partner[]> {
+  async findAll({ skip }: FindAllParnerstDto): Promise<Partner[]> {
     const partners = await this.prisma.partner.findMany({
       skip: skip == null ? 0 : skip,
       take: 10,
@@ -93,18 +93,18 @@ export class PartnerRepository {
     return partners;
   }
 
-  async findByRegisterCode({ code }: FindPartnerByRegisterCode) {
+  async findByRegisterCode({ code }: FindPartnerByRegisterCodeDto) {
     const partner = await this.prisma.partner.findUnique({
       where: {
-        regiterCode: code
-      }
+        regiterCode: code,
+      },
     });
 
     return partner;
   }
 
   //REFAZER
-  async findClientsPartner({ partnerId }: FindClientsPartnerInput) {
+  async findClientsPartner({ partnerId }: FindClientsPartnerDto) {
     const { clients } = await this.prisma.partner.findFirst({
       select: {
         clients: true,

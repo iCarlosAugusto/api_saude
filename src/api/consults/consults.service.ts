@@ -1,36 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { CreateConsultInput } from './dto/create-consult.input';
-import { UpdateConsultInput } from './dto/update-consult.input';
 import { ConsultRepository } from './repository/consult.repository';
-import { FindAllClientConsultsInput } from './dto/find-all-clients-consults.input';
-import { FindOneConsultInput } from './dto/find-one-consult.input';
-import { FindAllPartnerConsultsInput } from './dto/find-all-partner-consults.input';
+import { CreateConsultDto } from './dto/create-consult.dto';
+import { FindAllClientConsultsDto } from './dto/find-all-clients-consults.dto';
+import { FindAllPartnerConsultsDto } from './dto/find-all-partner-consults.dto';
+import { FindOneConsultDto } from './dto/find-one-consult.dto';
+import { UpdateConsultDto } from './dto/update-consult.dto';
 
 @Injectable()
 export class ConsultsService {
   constructor(private consultRepository: ConsultRepository) {}
 
-  async create(createConsultInput: CreateConsultInput) {
-    return await this.consultRepository.create(createConsultInput);
+  async create(createConsultDto: CreateConsultDto) {
+    return await this.consultRepository.create(createConsultDto);
   }
 
-  async findAllClientConsults(findAllClientConsults: FindAllClientConsultsInput) {
+  async findAllClientConsults(findAllClientConsults: FindAllClientConsultsDto) {
     return await this.consultRepository.findAllClientConsults(
       findAllClientConsults,
     );
   }
 
-  async findAllPartnerConsults(findAllPartnerConsults: FindAllPartnerConsultsInput) {
+  async findAllPartnerConsults(findAllPartnerConsults: FindAllPartnerConsultsDto) {
     return await this.consultRepository.findAllPartnerConsults(
       findAllPartnerConsults,
     );
   }
 
-  async findOne(findOneConultInput: FindOneConsultInput) {
-    return await this.consultRepository.findOneConsult(findOneConultInput);
+  async findOne(findOneConultDto: FindOneConsultDto) {
+    return await this.consultRepository.findOneConsult(findOneConultDto);
   }
 
-  update(id: number, updateConsultInput: UpdateConsultInput) {
+  update(id: number, updateConsultDto: UpdateConsultDto) {
     return `This action updates a #${id} consult`;
   }
 

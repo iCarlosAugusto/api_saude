@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CreateNewsInput } from 'src/api/news/dtos/create-news.input';
+import { CreateNewsDto } from 'src/api/news/dtos/create-news.dto';
 import { PrismaService } from 'src/api/users/services/prima.service';
 
 @Injectable()
 export class NewsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create({ title, description, imageUrl }: CreateNewsInput){
+  async create({ title, description, imageUrl }: CreateNewsDto){
     return await this.prisma.news.create({
       data: {
         title,

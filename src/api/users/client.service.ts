@@ -1,12 +1,12 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from './services/prima.service';
-import { UpdatePasswordClientInput } from './dto/update-password-client.input';
 import { ClientRepository } from '../../repositories/client.repository';
-import { CreateClientInput } from './dto/create-client.input';
 import { Client } from '@prisma/client';
-import { UpdateClientInput } from './dto/update-client.input';
-import { ResetClientPasswordInput } from './dto/reset-client-password.input';
 import { EmailService } from 'src/utils/email.service';
+import { CreateClientDto } from './dto/create-client.dto';
+import { UpdateClientDto } from './dto/update-client.dto';
+import { UpdatePasswordClientDto } from './dto/update-password-client.dto';
+import { ResetClientPasswordDto } from './dto/reset-client-password.dto';
 
 @Injectable()
 export class ClientService {
@@ -16,7 +16,7 @@ export class ClientService {
     private emailService: EmailService,
   ) {}
 
-  async create(data: CreateClientInput): Promise<Client> {
+  async create(data: CreateClientDto): Promise<Client> {
     const client = await this.clientRepository.create(data);
     return client;
   }
@@ -34,21 +34,21 @@ export class ClientService {
     return clients;
   }
 
-  async update(updateClientInput: UpdateClientInput): Promise<Client> {
-    const isClientExists = await this.clientRepository.findOne(updateClientInput.id);
+  async update(updateClientDto: UpdateClientDto): Promise<Client> {
+    const isClientExists = await this.clientRepository.findOne(updateClientDto.id);
     if(!isClientExists) throw new Error("Cliente não encontrado");
-    const updatedClient = await this.clientRepository.update(updateClientInput);
+    const updatedClient = await this.clientRepository.update(updateClientDto);
     return updatedClient;
   }
 
-  async updatePassword({ id, currentPassword, newPassword }: UpdatePasswordClientInput): Promise<Client> {
+  async updatePassword({ id, currentPassword, newPassword }: UpdatePasswordClientDto): Promise<Client> {
     const isClientExists = await this.clientRepository.findOne(id);
     if(!isClientExists) throw new HttpException("Cliente não encontrado", 404);
     const updatedClintPassword = await this.clientRepository.updatePassword({id, currentPassword, newPassword});
     return updatedClintPassword;
   }
 
-  async resetPassword({ email }: ResetClientPasswordInput) {
+  async resetPassword({ email }: ResetClientPasswordDto) {
     const newPassword = Math.floor(1000 + Math.random() * 9000).toString();
 
     const client = await this.clientRepository.findOneByEmail(email);

@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateCompanyInput } from './dtos/create-company.input';
-import { FindCompaniesByDateInput } from './dtos/find-companies-by-date.input';
-import { FindCompanyByPartnerIdInput } from './dtos/find-company-by-id.input';
 import { CompanyRepository } from 'src/repositories/company.repository';
 import { PartnerRepository } from 'src/repositories/partner.repository';
+import { CreateCompanyDto } from './dtos/create-company.dto';
+import { FindCompanyByPartnerIdDto } from './dtos/find-company-by-id.dto';
+import { FindCompaniesByDateDto } from './dtos/find-companies-by-date.dto';
 
 @Injectable()
 export class CompanyService {
@@ -12,7 +12,7 @@ export class CompanyService {
     private partnerRepository: PartnerRepository,
   ) {}
 
-  async create({ name, availableDay, bannerImage, partnerId }: CreateCompanyInput) {
+  async create({ name, availableDay, bannerImage, partnerId }: CreateCompanyDto) {
 
     const partner = await this.partnerRepository.findOneById({id: partnerId});
 
@@ -34,7 +34,7 @@ export class CompanyService {
     return companies;
   }
 
-  async findByPartnerId({ partnerId }: FindCompanyByPartnerIdInput) {
+  async findByPartnerId({ partnerId }: FindCompanyByPartnerIdDto) {
 
     const partner = await this.partnerRepository.findOneById({id: partnerId});
     if(!partner){
@@ -47,7 +47,7 @@ export class CompanyService {
     return company;
   }
 
-  async findByDate({ date, partnerId }: FindCompaniesByDateInput) {
+  async findByDate({ date, partnerId }: FindCompaniesByDateDto) {
     const partner = await this.partnerRepository.findOneById({id: partnerId});
     if(!partner){
       throw new HttpException(

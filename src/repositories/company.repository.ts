@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCompanyInput } from 'src/api/company/dtos/create-company.input';
-import { FindCompaniesByDateInput } from 'src/api/company/dtos/find-companies-by-date.input';
-import { FindCompanyByPartnerIdInput } from 'src/api/company/dtos/find-company-by-id.input';
+import { CreateCompanyDto } from 'src/api/company/dtos/create-company.dto';
+import { FindCompaniesByDateDto } from 'src/api/company/dtos/find-companies-by-date.dto';
+import { FindCompanyByPartnerIdDto } from 'src/api/company/dtos/find-company-by-id.dto';
 import { PrismaService } from 'src/api/users/services/prima.service';
 
 @Injectable()
 export class CompanyRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create({ name, availableDay, bannerImage, partnerId }: CreateCompanyInput) {
+  async create({ name, availableDay, bannerImage, partnerId }: CreateCompanyDto) {
     return await this.prisma.company.create({
       data: {
         name,
@@ -23,7 +23,7 @@ export class CompanyRepository {
     return await this.prisma.company.findMany();
   }
 
-  async findByPartnerId({ partnerId }: FindCompanyByPartnerIdInput) {
+  async findByPartnerId({ partnerId }: FindCompanyByPartnerIdDto) {
     return await this.prisma.company.findMany({
       where: {
         partnerId
@@ -31,7 +31,7 @@ export class CompanyRepository {
     })
   }
 
-  async findByDate({ date, partnerId }: FindCompaniesByDateInput) {
+  async findByDate({ date, partnerId }: FindCompaniesByDateDto) {
     return this.prisma.company.findMany({
       where: {
         availableDay: {

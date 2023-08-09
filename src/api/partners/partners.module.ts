@@ -1,12 +1,15 @@
 import { Module } from '@nestjs/common';
 import { PartnersService } from './partners.service';
-import { PartnersResolver } from './partners.resolver';
 import { PrismaService } from '../users/services/prima.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { EmailService } from 'src/utils/email.service';
 import { PartnerRepository } from 'src/repositories/partner.repository';
+import { PartnersController } from './partners.controller';
 
 @Module({
+  controllers: [
+    PartnersController
+  ],
   imports: [
     MailerModule.forRoot({
       transport: {
@@ -20,7 +23,6 @@ import { PartnerRepository } from 'src/repositories/partner.repository';
     }),
   ],
   providers: [
-    PartnersResolver,
     PartnersService,
     PrismaService,
     PartnerRepository,

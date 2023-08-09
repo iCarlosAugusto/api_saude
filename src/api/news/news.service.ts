@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateNewsInput } from './dtos/create-news.input';
 import { NewsRepository } from 'src/repositories/news.repository';
+import { CreateNewsDto } from './dtos/create-news.dto';
 
 @Injectable()
 export class NewsService {
 
   constructor(private newsRepository: NewsRepository){}
 
-  async create(data: CreateNewsInput) {
+  async create(data: CreateNewsDto) {
     const news = await this.newsRepository.create(data); 
     return news;
   }

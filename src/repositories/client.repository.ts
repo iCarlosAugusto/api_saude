@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../api/users/services/prima.service';
-import { UpdatePasswordClientInput } from '../api/users/dto/update-password-client.input';
 import { IClientRepository } from '../api/users/repositories/IUserRepository';
-import { CreateClientInput } from '../api/users/dto/create-client.input';
-import { UpdateClientInput } from '../api/users/dto/update-client.input';
 import { ClientEntity } from '../api/users/entities/client.entity';
 import { Client } from '@prisma/client';
 import { EmailService } from 'src/utils/email.service';
+import { CreateClientDto } from 'src/api/users/dto/create-client.dto';
+import { UpdateClientDto } from 'src/api/users/dto/update-client.dto';
+import { UpdatePasswordClientDto } from 'src/api/users/dto/update-password-client.dto';
 
 @Injectable()
 class ClientRepository implements IClientRepository {
@@ -15,7 +15,7 @@ class ClientRepository implements IClientRepository {
     private emailService: EmailService,
   ) {}
 
-  async create(data: CreateClientInput) {
+  async create(data: CreateClientDto) {
     const firstPartnerPassword = data.password ?? Math.floor(1000 + Math.random() * 9000).toString();
     const isClientRepeted = await this.prisma.client.findUnique({
       where: {
@@ -65,7 +65,7 @@ class ClientRepository implements IClientRepository {
     return Clients;
   }
 
-  async update(data: UpdateClientInput): Promise<Client> {
+  async update(data: UpdateClientDto): Promise<Client> {
     const updateClient = await this.prisma.client.update({
       where: {
         id: data.id,
@@ -96,7 +96,7 @@ class ClientRepository implements IClientRepository {
     id,
     currentPassword,
     newPassword,
-  }: UpdatePasswordClientInput): Promise<Client> {
+  }: UpdatePasswordClientDto): Promise<Client> {
     const client = await this.prisma.client.findUnique({
       where: {
         id: id,
@@ -105,7 +105,6 @@ class ClientRepository implements IClientRepository {
     if (client.password !== currentPassword) {
       throw new HttpException('Senha atual incorreta', 404);
     }
-    console.log("PASSOU!");
     const updatedPasswordClient = await this.prisma.client.update({
       where: {
         id: id,

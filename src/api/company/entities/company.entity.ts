@@ -1,6 +1,5 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { Field } from '@nestjs/graphql';
 
-@ObjectType()
 export class CompanyEntity {
 
   @Field(() => String)

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateConsultInput } from '../dto/create-consult.input';
-import { FindAllClientConsultsInput } from '../dto/find-all-clients-consults.input';
-import { FindOneConsultInput } from '../dto/find-one-consult.input';
-import { FindAllPartnerConsultsInput } from '../dto/find-all-partner-consults.input';
 import { EmailService } from 'src/utils/email.service';
 import { PrismaService } from 'src/api/users/services/prima.service';
+import { CreateConsultDto } from '../dto/create-consult.dto';
+import { FindOneConsultDto } from '../dto/find-one-consult.dto';
+import { FindAllClientConsultsDto } from '../dto/find-all-clients-consults.dto';
+import { FindAllPartnerConsultsDto } from '../dto/find-all-partner-consults.dto';
 
 @Injectable()
 export class ConsultRepository {
@@ -13,7 +13,7 @@ export class ConsultRepository {
     private emailService: EmailService
   ) {}
 
-  async create(data: CreateConsultInput) {
+  async create(data: CreateConsultDto) {
     await this.emailService.sendEmail(data.clientEmail, data.clientEmailMessage);
     await this.emailService.sendEmail(data.partnerEmail, data.partnerEmailMessage)
     const consult = await this.prisma.consult.create({
@@ -27,7 +27,7 @@ export class ConsultRepository {
     return consult;
   }
 
-  async findOneConsult({ id }: FindOneConsultInput){
+  async findOneConsult({ id }: FindOneConsultDto){
     const consult = await this.prisma.consult.findUnique({
       where: {
         id
@@ -42,7 +42,7 @@ export class ConsultRepository {
     skip,
     startDateTimestamp,
     limitDateTimestamp
-  }: FindAllClientConsultsInput) {
+  }: FindAllClientConsultsDto) {
     console.log(isFinished);
     const consults = await this.prisma.consult.findMany({
       where: {
@@ -70,7 +70,7 @@ export class ConsultRepository {
     skip,
     startDateTimestamp,
     limitDateTimestamp
-  }: FindAllPartnerConsultsInput) {
+  }: FindAllPartnerConsultsDto) {
     const consults = await this.prisma.consult.findMany({
       where: {
         partnerId: partnerId,

@@ -1,24 +1,15 @@
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
-import { GraphQLError, GraphQLFormattedError } from 'graphql';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ApiModule } from './api/api.module';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
-  imports: [
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: true,
-      formatError: (error: GraphQLError) => {
-        const graphQLFormattedError: GraphQLFormattedError = {
-          message: error?.message,
-        };
-        return graphQLFormattedError;
-      },
-    }),
-    ApiModule
-  ],
+  imports: [ ApiModule ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+  ],
 })
 export class AppModule {}
