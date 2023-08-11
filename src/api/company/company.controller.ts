@@ -16,8 +16,8 @@ export class CompanyController {
     return this.companyService.create(createCompanyDto);
   }
 
-  @Get('/findById')
-  findById(
+  @Post('/findByPartnerId')
+  findByPartnerId(
     @Body() findCompanyByPartnerId: FindCompanyByPartnerIdDto
   ) {
     return this.companyService.findByPartnerId(findCompanyByPartnerId);

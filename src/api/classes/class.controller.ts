@@ -9,7 +9,7 @@ import { CancelClientClassDto } from './dtos/cancel-client-class.dto';
 import { FindAllClassesDto } from './dtos/find-all-classes.dto';
 import { FindNextClientClassDto } from './dtos/find-next-client-class.dto';
 
-@Controller()
+@Controller('/class')
 export class ClassController {
   constructor(private readonly classService: ClassService) {}
 
@@ -28,7 +28,7 @@ export class ClassController {
     return this.classService.delete(deleteClassDto);
   }
 
-  @Get('/findAll')
+  @Post('/findAll')
   findAllClasses(@Body() findAllClassesDto: FindAllClassesDto){
     return this.classService.findAllClassses(findAllClassesDto);
   }

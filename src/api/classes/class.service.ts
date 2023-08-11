@@ -56,11 +56,8 @@ export class ClassService {
     return classes;
   }
 
-  async findAllClassesByDate({ companyId, date }: FindAllClassesByDateDto) {
-    const classes = await this.classRepository.findAllClassesByDate({
-      companyId,
-      date,
-    });
+  async findAllClassesByDate(data: FindAllClassesByDateDto) {
+    const classes = await this.classRepository.findAllClassesByDate(data);
     return classes;
   }
 
