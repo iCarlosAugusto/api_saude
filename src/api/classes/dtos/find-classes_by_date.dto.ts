@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class FindAllClassesByDateDto {
 
@@ -8,5 +8,9 @@ export class FindAllClassesByDateDto {
 
   @IsNotEmpty()
   @IsString()
-  date: string;
+  startDate: string;
+
+  @IsNotEmpty()
+  @IsString()
+  endDate: string;
 }

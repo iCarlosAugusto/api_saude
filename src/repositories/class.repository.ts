@@ -107,7 +107,6 @@ export class ClassRepository {
     const classes = await this.prisma.class.findMany({
       where: {
         companyId,
-        date,
       },
       include: {
         clients: true,
@@ -124,11 +123,14 @@ export class ClassRepository {
     return classes;
   }
 
-  async findAllClassesByDate({ companyId, date }: FindAllClassesByDateDto) {
+  async findAllClassesByDate({ companyId, startDate, endDate }: FindAllClassesByDateDto) {
     return this.prisma.class.findMany({
       where: {
         companyId,
-        date,
+        date: {
+          gte: startDate,
+          lte: endDate
+        },
       },
       include: {
         clients: true
