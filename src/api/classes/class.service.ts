@@ -11,6 +11,7 @@ import { BookClassDto } from './dtos/book-class.dto';
 import { FindNextClientClassDto } from './dtos/find-next-client-class.dto';
 import { CancelClientClassDto } from './dtos/cancel-client-class.dto';
 import { FindAllClientsOnClassDto } from './dtos/find-all-clients-on-class.dto';
+import { FindScheduledClassesDto } from './dtos/findScheduledClasses.dto';
 
 @Injectable()
 export class ClassService {
@@ -113,5 +114,10 @@ export class ClassService {
   async findClientsOnClass({ classId }: FindAllClientsOnClassDto) {
     const clients = await this.classRepository.findClientsOnClass(classId);
     return clients;
+  }
+
+  async findScheduledClasses({ clientId }: FindScheduledClassesDto) {
+    const classes = await this.classRepository.findScheduledClasses({clientId: clientId});
+    return classes;
   }
 }
