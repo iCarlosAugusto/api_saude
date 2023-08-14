@@ -6,6 +6,7 @@ import { DeleteClassDto } from 'src/api/classes/dtos/delete-class.dto';
 import { FindAllClassesDto } from 'src/api/classes/dtos/find-all-classes.dto';
 import { FindAllClassesByDateDto } from 'src/api/classes/dtos/find-classes_by_date.dto';
 import { FindNextClientClassDto } from 'src/api/classes/dtos/find-next-client-class.dto';
+import { FindScheduledClassesDto } from 'src/api/classes/dtos/findScheduledClasses.dto';
 import { UpdateClassDto } from 'src/api/classes/dtos/update-class.dto';
 import { PrismaService } from 'src/api/users/services/prima.service';
 
@@ -234,5 +235,17 @@ export class ClassRepository {
 
     });
     return clients[0].clients;
+  }
+
+  async findScheduledClasses({ clientId }: FindScheduledClassesDto) {
+    const classes = await this.prisma.client.findMany({
+      where: {
+        id: clientId
+      },
+      select: {
+        classes: true
+      }
+    });
+    return classes;
   }
 }
