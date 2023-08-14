@@ -8,6 +8,7 @@ import { BookClassDto } from './dtos/book-class.dto';
 import { CancelClientClassDto } from './dtos/cancel-client-class.dto';
 import { FindAllClassesDto } from './dtos/find-all-classes.dto';
 import { FindNextClientClassDto } from './dtos/find-next-client-class.dto';
+import { FindScheduledClassesDto } from './dtos/findScheduledClasses.dto';
 
 @Controller('/class')
 export class ClassController {
@@ -48,6 +49,11 @@ export class ClassController {
   @Get('/findClientNextClasss')
   findClientNextClass(@Body() findNextClientClassDto: FindNextClientClassDto) {
     return this.classService.findNextClientClass(findNextClientClassDto);
+  }
+
+  @Post('/findScheduledClasses')
+  findScheduledClasses(@Body() findScheduledClasses: FindScheduledClassesDto) {
+    return this.classService.findScheduledClasses(findScheduledClasses);
   }
 
   @Post('/cancel')
