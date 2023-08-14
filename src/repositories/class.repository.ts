@@ -238,7 +238,7 @@ export class ClassRepository {
   }
 
   async findScheduledClasses({ clientId }: FindScheduledClassesDto) {
-    const classes = await this.prisma.client.findMany({
+    const client = await this.prisma.client.findMany({
       where: {
         id: clientId
       },
@@ -246,6 +246,6 @@ export class ClassRepository {
         classes: true
       }
     });
-    return classes;
+    return client[0].classes;
   }
 }
