@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AuthenticationInput } from '../dto/authentication.input';
 import { PrismaService } from 'src/api/users/services/prima.service';
+import { AuthenticationDto } from '../dto/authentication.dto';
 
 @Injectable()
 export class AuthenticationRepository {
   constructor(private prisma: PrismaService) {}
 
-  async authenticate({ identification, password, email }: AuthenticationInput) {
+  async authenticate({ identification, password, email }: AuthenticationDto) {
     const user = await this.prisma.client.findFirst({
       where: {
         OR: [

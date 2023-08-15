@@ -1,10 +1,17 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from '../users/services/prima.service';
-import { AuthenticationResolver } from './authentication.resolver';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticationRepository } from './repository/authentication.repository';
+import { AuthenticationController } from './authentication.controller';
 
 @Module({
-  providers: [AuthenticationResolver, AuthenticationService,  PrismaService, AuthenticationRepository]
+  controllers: [
+    AuthenticationController
+  ],
+  providers: [
+    AuthenticationService,
+    PrismaService,
+    AuthenticationRepository
+  ]
 })
 export class AuthenticationModule {}

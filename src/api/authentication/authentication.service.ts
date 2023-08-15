@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { AuthenticationInput } from './dto/authentication.input';
 import { AuthenticationRepository } from './repository/authentication.repository';
+import { AuthenticationDto } from './dto/authentication.dto';
 
 @Injectable()
 export class AuthenticationService {
   constructor(private authenticationRepository: AuthenticationRepository) {}
 
-  async authenticate(authenticateInput: AuthenticationInput) {
+  async authenticate(authenticateInput: AuthenticationDto) {
     return await this.authenticationRepository.authenticate(authenticateInput);
   }
 }

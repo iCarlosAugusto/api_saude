@@ -29,8 +29,8 @@ model Partner {
 model Company {
   id           String   @id @default(uuid())
   name         String
-  availableDay String[]
-  bannerImage  String
+  bannerImage  String?
+  logoImage    String?
   partnerId    String
   classes      Class[]
   partner      Partner  @relation(fields: [partnerId], references: [id])
