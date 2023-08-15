@@ -12,9 +12,9 @@ export class CompanyService {
     private partnerRepository: PartnerRepository,
   ) {}
 
-  async create({ name, bannerImage, partnerId }: CreateCompanyDto) {
+  async create(data: CreateCompanyDto) {
 
-    const partner = await this.partnerRepository.findOneById({id: partnerId});
+    const partner = await this.partnerRepository.findOneById({id: data.partnerId});
 
     if(!partner){
       throw new HttpException(
@@ -22,9 +22,7 @@ export class CompanyService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const company = await this.companyRepository.create({
-      name, bannerImage, partnerId,
-    })
+    const company = await this.companyRepository.create(data);
 
     return company;
   }

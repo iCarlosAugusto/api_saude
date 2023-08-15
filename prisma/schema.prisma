@@ -29,6 +29,7 @@ model Partner {
 model Company {
   id           String   @id @default(uuid())
   name         String
+  address      String
   bannerImage  String?
   logoImage    String?
   partnerId    String

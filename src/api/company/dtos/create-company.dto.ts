@@ -17,5 +17,13 @@ export class CreateCompanyDto {
 
   @IsString()
   @IsNotEmpty()
+  logoImage: string;
+
+  @IsString()
+  @IsNotEmpty()
   partnerId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  address: string;
 }

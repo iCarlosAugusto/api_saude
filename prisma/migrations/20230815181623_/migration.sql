@@ -3,15 +3,12 @@ CREATE TABLE "partners" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "identification" TEXT NOT NULL,
+    "regiterCode" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "photo" TEXT,
     "password" TEXT NOT NULL,
-    "specialties" TEXT NOT NULL,
-    "address" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
-    "servicePrice" TEXT NOT NULL,
-    "jobDescription" TEXT NOT NULL,
 
     CONSTRAINT "partners_pkey" PRIMARY KEY ("id")
 );
@@ -20,8 +17,9 @@ CREATE TABLE "partners" (
 CREATE TABLE "Company" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "availableDay" TEXT[],
-    "bannerImage" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "bannerImage" TEXT,
+    "logoImage" TEXT,
     "partnerId" TEXT NOT NULL,
 
     CONSTRAINT "Company_pkey" PRIMARY KEY ("id")
@@ -54,7 +52,7 @@ CREATE TABLE "services" (
     "specialitie" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "partnerId" TEXT NOT NULL,
-    "bannerImage" TEXT NOT NULL,
+    "bannerImage" TEXT,
     "startAt" TEXT NOT NULL,
     "endAt" TEXT NOT NULL,
 
@@ -100,21 +98,12 @@ CREATE TABLE "Class" (
     "dateTimestamp" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "place" TEXT NOT NULL,
-    "bannerImage" TEXT NOT NULL,
+    "bannerImage" TEXT,
     "teacherName" TEXT NOT NULL,
     "companyId" TEXT NOT NULL,
     "date" TEXT NOT NULL,
 
     CONSTRAINT "Class_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "ClientsOnClasses" (
-    "clientId" TEXT NOT NULL,
-    "classId" TEXT NOT NULL,
-    "assignedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "ClientsOnClasses_pkey" PRIMARY KEY ("classId","clientId")
 );
 
 -- CreateTable
@@ -127,14 +116,29 @@ CREATE TABLE "News" (
     CONSTRAINT "News_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "_ClassToClient" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "partners_identification_key" ON "partners"("identification");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "partners_regiterCode_key" ON "partners"("regiterCode");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "client_email_key" ON "client"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "client_identification_key" ON "client"("identification");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_ClassToClient_AB_unique" ON "_ClassToClient"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_ClassToClient_B_index" ON "_ClassToClient"("B");
 
 -- AddForeignKey
 ALTER TABLE "Company" ADD CONSTRAINT "Company_partnerId_fkey" FOREIGN KEY ("partnerId") REFERENCES "partners"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -158,7 +162,7 @@ ALTER TABLE "client" ADD CONSTRAINT "client_partnerId_fkey" FOREIGN KEY ("partne
 ALTER TABLE "Class" ADD CONSTRAINT "Class_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ClientsOnClasses" ADD CONSTRAINT "ClientsOnClasses_classId_fkey" FOREIGN KEY ("classId") REFERENCES "Class"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "_ClassToClient" ADD CONSTRAINT "_ClassToClient_A_fkey" FOREIGN KEY ("A") REFERENCES "Class"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ClientsOnClasses" ADD CONSTRAINT "ClientsOnClasses_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "_ClassToClient" ADD CONSTRAINT "_ClassToClient_B_fkey" FOREIGN KEY ("B") REFERENCES "client"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -8,12 +8,14 @@ import { PrismaService } from 'src/api/users/services/prima.service';
 export class CompanyRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create({ name, bannerImage, partnerId }: CreateCompanyDto) {
+  async create({ name, bannerImage, logoImage, partnerId, address }: CreateCompanyDto) {
     return await this.prisma.company.create({
       data: {
         name,
         bannerImage,
-        partnerId 
+        logoImage,
+        partnerId,
+        address
       }
     })
   }
