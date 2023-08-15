@@ -11,12 +11,6 @@ export class CreateCompanyDto {
   @IsString()
   name: string;
 
-  @IsArray()
-  @ArrayNotEmpty()
-  @ArrayUnique()
-  @IsString({ each: true })
-  availableDay: string[];
-
   @IsString()
   @IsNotEmpty()
   bannerImage: string;

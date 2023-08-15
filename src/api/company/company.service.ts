@@ -12,7 +12,7 @@ export class CompanyService {
     private partnerRepository: PartnerRepository,
   ) {}
 
-  async create({ name, availableDay, bannerImage, partnerId }: CreateCompanyDto) {
+  async create({ name, bannerImage, partnerId }: CreateCompanyDto) {
 
     const partner = await this.partnerRepository.findOneById({id: partnerId});
 
@@ -23,7 +23,7 @@ export class CompanyService {
       );
     }
     const company = await this.companyRepository.create({
-      name,availableDay, bannerImage, partnerId,
+      name, bannerImage, partnerId,
     })
 
     return company;
@@ -48,16 +48,17 @@ export class CompanyService {
   }
 
   async findByDate({ date, partnerId }: FindCompaniesByDateDto) {
-    const partner = await this.partnerRepository.findOneById({id: partnerId});
-    if(!partner){
-      throw new HttpException(
-        'Não foi possível criar a companhia pelo id do parceiro fornecido',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-    const company = await this.companyRepository.findByDate({
-      date, partnerId
-    });
-    return company;
+    console.log("Todo - implementar...");
+    // const partner = await this.partnerRepository.findOneById({id: partnerId});
+    // if(!partner){
+    //   throw new HttpException(
+    //     'Não foi possível criar a companhia pelo id do parceiro fornecido',
+    //     HttpStatus.BAD_REQUEST,
+    //   );
+    // }
+    // const company = await this.companyRepository.findByDate({
+    //   date, partnerId
+    // });
+    // return company;
   }
 }

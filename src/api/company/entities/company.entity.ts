@@ -8,9 +8,6 @@ export class CompanyEntity {
   @Field(() => String)
   name: string;
 
-  @Field(() => [ String ])
-  availableDay: Date;
-
   @Field(() => String)
   bannerImage: String;
 

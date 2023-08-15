@@ -8,11 +8,10 @@ import { PrismaService } from 'src/api/users/services/prima.service';
 export class CompanyRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create({ name, availableDay, bannerImage, partnerId }: CreateCompanyDto) {
+  async create({ name, bannerImage, partnerId }: CreateCompanyDto) {
     return await this.prisma.company.create({
       data: {
         name,
-        availableDay,
         bannerImage,
         partnerId 
       }
@@ -31,16 +30,13 @@ export class CompanyRepository {
     })
   }
 
-  async findByDate({ date, partnerId }: FindCompaniesByDateDto) {
-    return this.prisma.company.findMany({
-      where: {
-        availableDay: {
-          has: date
-        },
-        partnerId
-      }
-    })
-  }
+  // async findByDate({ date, partnerId }: FindCompaniesByDateDto) {
+  //   return this.prisma.company.findMany({
+  //     where: {
+  //       partnerId
+  //     }
+  //   })
+  // }
 
   async findOneById(id: string){
     return await this.prisma.company.findUnique({
