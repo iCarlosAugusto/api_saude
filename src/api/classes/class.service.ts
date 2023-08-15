@@ -116,8 +116,8 @@ export class ClassService {
     return clients;
   }
 
-  async findScheduledClasses({ clientId }: FindScheduledClassesDto) {
-    const classes = await this.classRepository.findScheduledClasses({clientId: clientId});
+  async findScheduledClasses(data: FindScheduledClassesDto) {
+    const classes = await this.classRepository.findScheduledClasses(data);
     return classes;
   }
 }
