@@ -20,6 +20,10 @@ export class CreateClassDto {
 
   @IsString()
   @IsNotEmpty()
+  endAt: string;
+
+  @IsString()
+  @IsNotEmpty()
   address: string; 
   
   @IsString()

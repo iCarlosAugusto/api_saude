@@ -14,32 +14,10 @@ import { PrismaService } from 'src/api/users/services/prima.service';
 export class ClassRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createClass({
-    name,
-    lots,
-    startAt,
-    companyId,
-    address,
-    description,
-    place,
-    bannerImage,
-    teacherName,
-    dateTimestamp,
-    date,
-  }: CreateClassDto) {
+  async createClass(data : CreateClassDto) {
     return this.prisma.class.create({
       data: {
-        name,
-        lots,
-        startAt,
-        address,
-        description,
-        place,
-        companyId,
-        bannerImage,
-        teacherName,
-        dateTimestamp,
-        date,
+        ...data
       },
     });
   }

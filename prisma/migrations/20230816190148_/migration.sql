@@ -95,6 +95,7 @@ CREATE TABLE "Class" (
     "description" TEXT NOT NULL,
     "lots" INTEGER NOT NULL,
     "startAt" TEXT NOT NULL,
+    "endAt" TEXT NOT NULL,
     "dateTimestamp" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "place" TEXT NOT NULL,

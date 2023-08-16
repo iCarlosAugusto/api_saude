@@ -23,6 +23,10 @@ export class UpdateClassDto {
 
   @IsOptional()
   @IsString()
+  endAt: string;
+
+  @IsOptional()
+  @IsString()
   date: string;
 
   @IsOptional()

@@ -95,7 +95,7 @@ model Client {
   phoneNumber    String
   name           String
   partnerId      String
-  classes        Class[]
+  classes        Class[] 
   partner        Partner            @relation(fields: [partnerId], references: [id])
   consults       Consult[]
 
@@ -108,6 +108,7 @@ model Class {
   description   String
   lots          Int
   startAt       String
+  endAt         String
   dateTimestamp String
   address       String
   place         String
