@@ -23,24 +23,20 @@ export class CreateServiceDto {
   bannerImage?: string;
 
   @IsString()
-  @IsNotEmpty({ message: "O nome do parceiro responsável é obrigatório"})
-  partnerName: string;
-
-  @IsString()
-  @IsNotEmpty({ message: "A foto do parceiro responsável é obrigatório"})
-  partnerPhoto: string;
-
-  @IsString()
-  @IsNotEmpty()
-  partnerEmail: string;
-
-  @IsString()
   @IsNotEmpty({ message: "O endereço do parceiro responsável é obrigatório"})
   address: string;
 
   @IsString()
   @IsNotEmpty({ message: "O endereço do parceiro responsável é obrigatório"})
   specialitie: string;
+
+  @IsString()
+  @IsNotEmpty()
+  date: string;
+
+  @IsString()
+  @IsNotEmpty()
+  dateTimestamp: string;
 
   @IsString()
   @IsNotEmpty()

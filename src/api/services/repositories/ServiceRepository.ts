@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/api/users/services/prima.service';
 import { CreateServiceDto } from '../dto/create-service.dto';
 import { FindAllServicesDto } from '../dto/find-all-services.dto';
+import { FindByPartnerIdDto } from '../dto/find-by-partnerId.dto';
 
 @Injectable()
 class ServiceRepository {
@@ -12,13 +13,20 @@ class ServiceRepository {
     const service = await this.prisma.service.create({ data });
     return service;
   }
+  
+  async findByPartnerId({ partnerId }: FindByPartnerIdDto) {
+    const services = await this.prisma.service.findMany({
+      where: {
+        partnerId: partnerId
+      }
+    });
+    return services;
+  }
 
   async findAll({ skip }: FindAllServicesDto) {
     const services = await this.prisma.service.findMany({
-      skip: skip == null ? 0 : skip,
-      take: 10,
       include: {
-        consult: true,
+        consult: false,
         partner: true,
       }
   });

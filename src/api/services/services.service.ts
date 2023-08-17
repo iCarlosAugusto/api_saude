@@ -3,6 +3,7 @@ import { ServiceRepository } from './repositories/ServiceRepository';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { FindAllServicesDto } from './dto/find-all-services.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
+import { FindByPartnerIdDto } from './dto/find-by-partnerId.dto';
 
 @Injectable()
 export class ServicesService {
@@ -17,6 +18,10 @@ export class ServicesService {
 
   findAll(findAllServicesDto: FindAllServicesDto) {
     return this.serviceRepository.findAll(findAllServicesDto)
+  }
+
+  findByPartnerId(findByPartnerIdDto: FindByPartnerIdDto) {
+    return this.serviceRepository.findByPartnerId(findByPartnerIdDto);
   }
 
   findOne(id: number) {

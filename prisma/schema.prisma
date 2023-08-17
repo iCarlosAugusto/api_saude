@@ -49,22 +49,21 @@ model Admin {
 }
 
 model Service {
-  id           String    @id @default(uuid())
-  createdAt    DateTime  @default(now())
-  name         String
-  description  String
-  price        String
-  partnerName  String
-  partnerPhoto String
-  partnerEmail String
-  specialitie  String
-  address      String
-  partnerId    String
-  bannerImage  String?
-  startAt      String
-  endAt        String
-  consult      Consult[]
-  partner      Partner   @relation(fields: [partnerId], references: [id])
+  id            String    @id @default(uuid())
+  createdAt     DateTime  @default(now())
+  name          String
+  description   String
+  price         String
+  specialitie   String
+  address       String
+  bannerImage   String?
+  date          String
+  dateTimestamp String
+  startAt       String
+  endAt         String
+  consult       Consult[]
+  partnerId     String
+  partner       Partner   @relation(fields: [partnerId], references: [id])
 
   @@map("services")
 }

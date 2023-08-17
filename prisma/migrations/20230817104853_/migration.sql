@@ -46,15 +46,14 @@ CREATE TABLE "services" (
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "price" TEXT NOT NULL,
-    "partnerName" TEXT NOT NULL,
-    "partnerPhoto" TEXT NOT NULL,
-    "partnerEmail" TEXT NOT NULL,
     "specialitie" TEXT NOT NULL,
     "address" TEXT NOT NULL,
-    "partnerId" TEXT NOT NULL,
     "bannerImage" TEXT,
+    "date" TEXT NOT NULL,
+    "dateTimestamp" TEXT NOT NULL,
     "startAt" TEXT NOT NULL,
     "endAt" TEXT NOT NULL,
+    "partnerId" TEXT NOT NULL,
 
     CONSTRAINT "services_pkey" PRIMARY KEY ("id")
 );

@@ -4,6 +4,7 @@ import { CreateServiceDto } from './dto/create-service.dto';
 import { FindAllServicesDto } from './dto/find-all-services.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { FindByPartnerIdDto } from './dto/find-by-partnerId.dto';
 
 @Controller('services')
 export class ServicesController {
@@ -17,6 +18,11 @@ export class ServicesController {
   @Get('/findAll')
   findAll(@Body()  findAllServicesDto: FindAllServicesDto) {
     return this.servicesService.findAll(findAllServicesDto);
+  }
+
+  @Post("/findByPartnerId")
+  findByPartnerId(@Body() findByPartnerId: FindByPartnerIdDto) {
+    return this.servicesService.findByPartnerId(findByPartnerId);
   }
 
   // @Get('/findOne')
