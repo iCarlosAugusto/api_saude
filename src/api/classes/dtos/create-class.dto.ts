@@ -36,7 +36,7 @@ export class CreateClassDto {
 
   @IsString()
   @IsNotEmpty()
-  teacherName: string;
+  professionalName: string;
   
   @IsString()
   @IsNotEmpty()

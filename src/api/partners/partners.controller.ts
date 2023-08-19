@@ -17,7 +17,7 @@ export class PartnersController {
     return this.partnersService.findOne(findOnePartnerDto);
   }
 
-  @Get('/findAll')
+  @Post('/findAll')
   findAllPartners(@Body() findAllParnerstDto: FindAllParnerstDto) {
     return this.partnersService.findAll(findAllParnerstDto);
   }

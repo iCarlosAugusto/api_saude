@@ -45,4 +45,12 @@ export class CreateServiceDto {
   @IsString()
   @IsNotEmpty()
   endAt: string;
+
+  @IsString()
+  @IsNotEmpty()
+  professionalName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  place: string;
 }

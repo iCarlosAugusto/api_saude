@@ -56,6 +56,8 @@ model Service {
   price         String
   specialitie   String
   address       String
+  place         String
+  professionalName String
   bannerImage   String?
   date          String
   dateTimestamp String
@@ -112,7 +114,7 @@ model Class {
   address       String
   place         String
   bannerImage   String?
-  teacherName   String
+  professionalName   String
   companyId     String
   date          String
   company       Company            @relation(fields: [companyId], references: [id])

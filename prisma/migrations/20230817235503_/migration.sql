@@ -48,6 +48,8 @@ CREATE TABLE "services" (
     "price" TEXT NOT NULL,
     "specialitie" TEXT NOT NULL,
     "address" TEXT NOT NULL,
+    "place" TEXT NOT NULL,
+    "professionalName" TEXT NOT NULL,
     "bannerImage" TEXT,
     "date" TEXT NOT NULL,
     "dateTimestamp" TEXT NOT NULL,
@@ -99,7 +101,7 @@ CREATE TABLE "Class" (
     "address" TEXT NOT NULL,
     "place" TEXT NOT NULL,
     "bannerImage" TEXT,
-    "teacherName" TEXT NOT NULL,
+    "professionalName" TEXT NOT NULL,
     "companyId" TEXT NOT NULL,
     "date" TEXT NOT NULL,
 
