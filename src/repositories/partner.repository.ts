@@ -9,6 +9,7 @@ import { FindAllParnerstDto } from 'src/api/partners/dto/find-all-partners.dto';
 import { FindPartnerByRegisterCodeDto } from 'src/api/partners/dto/find-partner-by-register-code.dto';
 import { FindClientsPartnerDto } from 'src/api/partners/dto/find-clients-partner.dto';
 import { CreatePartnerDto } from 'src/api/partners/dto/create-partner.dto';
+import { FindPartnersByCategoryDto } from 'src/api/partners/dto/find-partners-by-category.dto';
 
 @Injectable()
 export class PartnerRepository {
@@ -30,6 +31,7 @@ export class PartnerRepository {
         email: data.email,
         name: data.name,
         phoneNumber: data.phoneNumber,
+        categories: data.categories,
       },
     });
     await this.emailService.sendEmailToResetPassword({
@@ -74,6 +76,17 @@ export class PartnerRepository {
     });
 
     return updatedPasswordPartner;
+  }
+
+  async findByCategory({ category }: FindPartnersByCategoryDto) {
+    const partners = await this.prisma.partner.findMany({
+      where: {
+        categories: {
+          has: category
+        }
+      }
+    });
+    return partners;
   }
 
   async findOneById({ id }: FindOneParnetDto): Promise<Partner> {

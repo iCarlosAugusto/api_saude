@@ -8,6 +8,7 @@ import { UpdatePasswordPartnerDto } from './dto/update-password-partner.dto';
 import { FindClientsPartnerDto } from './dto/find-clients-partner.dto';
 import { FindPartnerByRegisterCodeDto } from './dto/find-partner-by-register-code.dto';
 import { CreatePartnerDto } from './dto/create-partner.dto';
+import { FindPartnersByCategoryDto } from './dto/find-partners-by-category.dto';
 
 @Injectable()
 export class PartnersService {
@@ -26,6 +27,12 @@ export class PartnersService {
   async findAll(data: FindAllParnerstDto) {
     const partner = await this.partnerRepository.findAll(data);
     return partner;
+  }
+
+  
+  async findByCategory(data: FindPartnersByCategoryDto) {
+    const partners = await this.partnerRepository.findByCategory(data);
+    return partners;
   }
 
   async update(data: UpdatePartnerDto): Promise<Partner> {

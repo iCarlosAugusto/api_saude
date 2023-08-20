@@ -7,6 +7,7 @@ import { UpdatePartnerDto } from './dto/update-partner.dto';
 import { FindClientsPartnerDto } from './dto/find-clients-partner.dto';
 import { UpdatePasswordPartnerDto } from './dto/update-password-partner.dto';
 import { FindPartnerByRegisterCodeDto } from './dto/find-partner-by-register-code.dto';
+import { FindPartnersByCategoryDto } from './dto/find-partners-by-category.dto';
 
 @Controller('partners')
 export class PartnersController {
@@ -20,6 +21,11 @@ export class PartnersController {
   @Post('/findAll')
   findAllPartners(@Body() findAllParnerstDto: FindAllParnerstDto) {
     return this.partnersService.findAll(findAllParnerstDto);
+  }
+
+  @Post("/findPartnersByCategory")
+  findPartnersByCategory(@Body() findPartnersByCategoryDto: FindPartnersByCategoryDto) {
+    return this.partnersService.findByCategory(findPartnersByCategoryDto);
   }
 
   @Post('/create')

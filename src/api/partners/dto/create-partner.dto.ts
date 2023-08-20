@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { ArrayMinSize, IsArray, IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreatePartnerDto {
   
@@ -29,4 +29,9 @@ export class CreatePartnerDto {
   @IsString()
   @IsNotEmpty({ message: 'O número é obrigatória' })
   phoneNumber: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @ArrayMinSize(1)
+  categories: string[];
 }

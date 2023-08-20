@@ -18,6 +18,7 @@ model Partner {
   photo          String?
   password       String
   phoneNumber    String
+  categories     String[]
   companies      Company[]
   clients        Client[]
   consults       Consult[]
