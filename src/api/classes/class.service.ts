@@ -12,6 +12,7 @@ import { FindNextClientClassDto } from './dtos/find-next-client-class.dto';
 import { CancelClientClassDto } from './dtos/cancel-client-class.dto';
 import { FindAllClientsOnClassDto } from './dtos/find-all-clients-on-class.dto';
 import { FindScheduledClassesDto } from './dtos/findScheduledClasses.dto';
+import { FindScheduledClassesAndConsultsDto } from './dtos/find-scheduled-classes-and-consults.dto';
 
 @Injectable()
 export class ClassService {
@@ -118,6 +119,11 @@ export class ClassService {
 
   async findScheduledClasses(data: FindScheduledClassesDto) {
     const classes = await this.classRepository.findScheduledClasses(data);
+    return classes;
+  }
+
+  async findScheduledClassesAndServices(data: FindScheduledClassesAndConsultsDto) {
+    const classes = await this.classRepository.findScheduledClassesAndConsults(data);
     return classes;
   }
 }
