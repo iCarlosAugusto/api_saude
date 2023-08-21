@@ -233,4 +233,37 @@ export class ClassRepository {
     });
     return client[0].classes;
   }
+
+  async findScheduledClassesAndConsults({ clientId, date }: FindScheduledClassesDto) {
+
+    const services = await this.prisma.consult.findMany({
+      where: {
+        clientId: clientId,
+        date: date,
+      },
+      include: {
+        service: true,
+      },
+    });
+    var servicesFormatted =services.map(item => item.service);
+    
+
+    const client = await this.prisma.client.findMany({
+      where: {
+        id: clientId
+      },
+      select: {
+        classes: {
+          include: {
+            company: true
+          },
+          where: {
+            date: date ?? undefined
+          }
+        }
+      }
+    });
+    var final = [...servicesFormatted, ...client[0].classes];
+    return final;
+  }
 }
