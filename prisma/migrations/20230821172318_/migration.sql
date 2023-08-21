@@ -9,6 +9,7 @@ CREATE TABLE "partners" (
     "photo" TEXT,
     "password" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
+    "categories" TEXT[],
 
     CONSTRAINT "partners_pkey" PRIMARY KEY ("id")
 );
@@ -119,6 +120,12 @@ CREATE TABLE "News" (
 );
 
 -- CreateTable
+CREATE TABLE "_favoritePartners" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
+-- CreateTable
 CREATE TABLE "_ClassToClient" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
@@ -135,6 +142,12 @@ CREATE UNIQUE INDEX "client_email_key" ON "client"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "client_identification_key" ON "client"("identification");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_favoritePartners_AB_unique" ON "_favoritePartners"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_favoritePartners_B_index" ON "_favoritePartners"("B");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_ClassToClient_AB_unique" ON "_ClassToClient"("A", "B");
@@ -162,6 +175,12 @@ ALTER TABLE "client" ADD CONSTRAINT "client_partnerId_fkey" FOREIGN KEY ("partne
 
 -- AddForeignKey
 ALTER TABLE "Class" ADD CONSTRAINT "Class_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_favoritePartners" ADD CONSTRAINT "_favoritePartners_A_fkey" FOREIGN KEY ("A") REFERENCES "client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_favoritePartners" ADD CONSTRAINT "_favoritePartners_B_fkey" FOREIGN KEY ("B") REFERENCES "partners"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_ClassToClient" ADD CONSTRAINT "_ClassToClient_A_fkey" FOREIGN KEY ("A") REFERENCES "Class"("id") ON DELETE CASCADE ON UPDATE CASCADE;

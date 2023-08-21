@@ -7,6 +7,8 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { UpdatePasswordClientDto } from './dto/update-password-client.dto';
 import { ResetClientPasswordDto } from './dto/reset-client-password.dto';
+import { FavoritePartnerDto } from './dto/favorite-partner.dto';
+import { GetFavoritePartnersDto } from './dto/get-favorite-partners.dto';
 
 @Injectable()
 export class ClientService {
@@ -29,7 +31,7 @@ export class ClientService {
     return client;
   }
 
-  async findAll(): Promise<Client[]> {
+  async findAll() {
     const clients = await this.clientRepository.findAll();
     return clients;
   }
@@ -61,5 +63,13 @@ export class ClientService {
       newPassword 
     });
     return 'Sucesso!';
+  }
+
+  async favoritePartner(data: FavoritePartnerDto) {
+    return await this.clientRepository.favoritePartner(data);
+  }
+
+  async findFavoritePartners(data: GetFavoritePartnersDto) {
+    return await this.clientRepository.findFavoritePartners(data);
   }
 }

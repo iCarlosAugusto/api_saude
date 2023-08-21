@@ -18,6 +18,7 @@ model Partner {
   photo          String?
   password       String
   phoneNumber    String
+  favoritedClients Client[] @relation(name: "favoritePartners")
   categories     String[]
   companies      Company[]
   clients        Client[]
@@ -97,7 +98,8 @@ model Client {
   phoneNumber    String
   name           String
   partnerId      String
-  classes        Class[] 
+  classes        Class[]
+  favoritePartners Partner[]  @relation(name: "favoritePartners")
   partner        Partner            @relation(fields: [partnerId], references: [id])
   consults       Consult[]
 

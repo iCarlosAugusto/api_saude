@@ -7,9 +7,11 @@ import { EmailService } from 'src/utils/email.service';
 import { CreateClientDto } from 'src/api/users/dto/create-client.dto';
 import { UpdateClientDto } from 'src/api/users/dto/update-client.dto';
 import { UpdatePasswordClientDto } from 'src/api/users/dto/update-password-client.dto';
+import { FavoritePartnerDto } from 'src/api/users/dto/favorite-partner.dto';
+import { GetFavoritePartnersDto } from 'src/api/users/dto/get-favorite-partners.dto';
 
 @Injectable()
-class ClientRepository implements IClientRepository {
+class ClientRepository {
   constructor(
     private prisma: PrismaService,
     private emailService: EmailService,
@@ -115,6 +117,59 @@ class ClientRepository implements IClientRepository {
     });
 
     return updatedPasswordClient;
+  }
+
+  async favoritePartner({ clientId, partnerId, isFavorite }: FavoritePartnerDto) {
+
+     if(isFavorite) {
+       await this.prisma.client.update({
+         where: {
+           id: clientId
+         },
+         data: {
+           favoritePartners: {
+             connect: {
+               id: partnerId
+             },
+           }
+         }
+       });
+    }else{
+      await this.prisma.client.update({
+        where: {
+          id: clientId
+        },
+        data: {
+          favoritePartners: {
+            disconnect: {
+              id: partnerId
+            },
+          }
+        }
+      });
+    }
+}
+
+  async findFavoritePartners({ clientId, }: GetFavoritePartnersDto) {
+    const client = await this.prisma.client.findMany({
+      where: {
+        id: clientId,
+      },
+      include: {
+        favoritePartners: {
+           include: {
+             favoritedClients: true
+           }
+        }
+      }
+      // select: {
+      //   favoritePartners: true
+      // }
+      // include: {
+      //   favoritePartners: true
+      // }
+    });
+    return client //[0]["favoritePartners"];
   }
 }
 
