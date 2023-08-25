@@ -12,7 +12,7 @@ export class CompanyService {
     private partnerRepository: PartnerRepository,
   ) {}
 
-  async create(data: CreateCompanyDto) {
+  async create(data: CreateCompanyDto, file: Express.Multer.File) {
 
     const partner = await this.partnerRepository.findOneById({id: data.partnerId});
 
@@ -22,7 +22,7 @@ export class CompanyService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const company = await this.companyRepository.create(data);
+    const company = await this.companyRepository.create(data, file);
 
     return company;
   }
