@@ -12,8 +12,8 @@ export class ServicesService {
     private serviceRepository: ServiceRepository 
   ) {}
 
-  create(createServiceDto: CreateServiceDto) {
-    return this.serviceRepository.create(createServiceDto);
+  create(createServiceDto: CreateServiceDto, file: Express.Multer.File,) {
+    return this.serviceRepository.create(createServiceDto, file);
   }
 
   findAll(findAllServicesDto: FindAllServicesDto) {
