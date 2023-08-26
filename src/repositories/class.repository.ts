@@ -9,15 +9,19 @@ import { FindNextClientClassDto } from 'src/api/classes/dtos/find-next-client-cl
 import { FindScheduledClassesDto } from 'src/api/classes/dtos/findScheduledClasses.dto';
 import { UpdateClassDto } from 'src/api/classes/dtos/update-class.dto';
 import { PrismaService } from 'src/api/users/services/prima.service';
+import { saveToBucket } from 'src/utils/saveToBucket';
 
 @Injectable()
 export class ClassRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createClass(data : CreateClassDto) {
+  async createClass(data : CreateClassDto, file: Express.Multer.File) {
+
+    const url = await saveToBucket(file);
     return this.prisma.class.create({
       data: {
-        ...data
+        ...data,
+        bannerImage: url
       },
     });
   }

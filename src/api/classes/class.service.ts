@@ -22,7 +22,7 @@ export class ClassService {
     private clientRepository: ClientRepository,
   ) {}
 
-  async createClass(data: CreateClassDto) {
+  async createClass(data: CreateClassDto,  file: Express.Multer.File) {
     const company = await this.companyRepository.findOneById(data.companyId);
 
     if (!company) {
@@ -32,7 +32,7 @@ export class ClassService {
       );
     }
 
-    const classFound = await this.classRepository.createClass(data);
+    const classFound = await this.classRepository.createClass(data, file);
 
     return classFound;
   }

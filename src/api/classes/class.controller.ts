@@ -1,5 +1,5 @@
 import { ClassService } from './class.service';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { CreateClassDto } from './dtos/create-class.dto';
 import { UpdateClassDto } from './dtos/update-class.dto';
 import { DeleteClassDto } from './dtos/delete-class.dto';
@@ -10,14 +10,19 @@ import { FindAllClassesDto } from './dtos/find-all-classes.dto';
 import { FindNextClientClassDto } from './dtos/find-next-client-class.dto';
 import { FindScheduledClassesDto } from './dtos/findScheduledClasses.dto';
 import { FindScheduledClassesAndConsultsDto } from './dtos/find-scheduled-classes-and-consults.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('/class')
 export class ClassController {
   constructor(private readonly classService: ClassService) {}
 
+  @UseInterceptors(FileInterceptor('file'))
   @Post('/create')
-  create(@Body() createClass: CreateClassDto){
-    return this.classService.createClass(createClass);
+  create(
+    @Body() createClass: CreateClassDto,
+    @UploadedFile() file: Express.Multer.File,
+  ){
+    return this.classService.createClass(createClass, file);
   }
 
   @Post('/update')
