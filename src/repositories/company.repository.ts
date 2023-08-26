@@ -4,6 +4,7 @@ import { FindCompanyByPartnerIdDto } from 'src/api/company/dtos/find-company-by-
 import { PrismaService } from 'src/api/users/services/prima.service';
 import { getStorage, getDownloadURL } from "firebase-admin/storage";
 import fs from 'fs';
+import { saveToBucket } from 'src/utils/saveToBucket';
 
 @Injectable()
 export class CompanyRepository {
@@ -11,10 +12,7 @@ export class CompanyRepository {
 
   async create({ name, bannerImage, logoImage, partnerId, address }: CreateCompanyDto, file: Express.Multer.File) {
     
-    const fileUpload = getStorage().bucket().file("images/companhias/"+file.originalname);
-    await fileUpload.save(file.buffer);
-    const url = await getDownloadURL(fileUpload);
-
+    const url = await saveToBucket(file);
     return await this.prisma.company.create({
       data: {
         name,
