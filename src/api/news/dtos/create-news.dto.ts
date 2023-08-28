@@ -9,8 +9,4 @@ export class CreateNewsDto {
   @IsString()
   @IsNotEmpty()
   description: string;
-
-  @IsString()
-  @IsNotEmpty()
-  imageUrl: string;
 }
