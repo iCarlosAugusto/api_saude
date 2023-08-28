@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateClassDto {
 
@@ -10,8 +11,8 @@ export class CreateClassDto {
   @IsString()
   description : string;
 
-  @IsNumber()
-  @IsNotEmpty()
+  @IsInt()
+  @Type(() => Number)
   lots: number;
 
   @IsString()
