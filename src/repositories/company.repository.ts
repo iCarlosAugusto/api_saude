@@ -10,14 +10,19 @@ import { saveToBucket } from 'src/utils/saveToBucket';
 export class CompanyRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create({ name, bannerImage, logoImage, partnerId, address }: CreateCompanyDto, file: Express.Multer.File) {
+  async create(
+    { name, bannerImage, partnerId, address }: CreateCompanyDto,
+    file: Express.Multer.File, 
+    logoImage: Express.Multer.File
+  ) {
     
     const url = await saveToBucket(file);
+    const logoImageUrl = await saveToBucket(logoImage);
     return await this.prisma.company.create({
       data: {
         name,
         bannerImage: url,
-        logoImage,
+        logoImage: logoImageUrl,
         partnerId,
         address
       }
