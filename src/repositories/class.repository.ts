@@ -21,6 +21,7 @@ export class ClassRepository {
     return this.prisma.class.create({
       data: {
         ...data,
+        lots: Number(data.lots),
         bannerImage: url
       },
     });
