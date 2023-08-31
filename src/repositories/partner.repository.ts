@@ -10,6 +10,7 @@ import { FindPartnerByRegisterCodeDto } from 'src/api/partners/dto/find-partner-
 import { FindClientsPartnerDto } from 'src/api/partners/dto/find-clients-partner.dto';
 import { CreatePartnerDto } from 'src/api/partners/dto/create-partner.dto';
 import { FindPartnersByCategoryDto } from 'src/api/partners/dto/find-partners-by-category.dto';
+import { saveToBucket } from 'src/utils/saveToBucket';
 
 @Injectable()
 export class PartnerRepository {
@@ -18,7 +19,8 @@ export class PartnerRepository {
     private emailService: EmailService,
   ) {}
 
-  async create(data: CreatePartnerDto): Promise<Partner> {
+  async create(data: CreatePartnerDto)
+  : Promise<Partner> {
     const firstPartnerPassword = Math.floor(
       1000 + Math.random() * 9000,
     ).toString();
@@ -30,6 +32,7 @@ export class PartnerRepository {
         password: firstPartnerPassword,
         email: data.email,
         name: data.name,
+        photo: data.photo,
         phoneNumber: data.phoneNumber,
         categories: data.categories,
       },

@@ -5,6 +5,7 @@ import { PrismaService } from 'src/api/users/services/prima.service';
 import { getStorage, getDownloadURL } from "firebase-admin/storage";
 import fs from 'fs';
 import { saveToBucket } from 'src/utils/saveToBucket';
+import { DeleteCompanyDto } from 'src/api/company/dtos/delete-company.dto';
 
 @Injectable()
 export class CompanyRepository {
@@ -27,6 +28,14 @@ export class CompanyRepository {
         address
       }
     })
+  }
+
+  async delete({ companyId }: DeleteCompanyDto) {
+    await this.prisma.company.delete({
+      where: {
+        id: companyId
+      }
+    });
   }
 
   async findAll() {

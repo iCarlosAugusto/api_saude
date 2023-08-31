@@ -4,6 +4,7 @@ import { PartnerRepository } from 'src/repositories/partner.repository';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { FindCompanyByPartnerIdDto } from './dtos/find-company-by-id.dto';
 import { FindCompaniesByDateDto } from './dtos/find-companies-by-date.dto';
+import { DeleteCompanyDto } from './dtos/delete-company.dto';
 
 @Injectable()
 export class CompanyService {
@@ -25,6 +26,10 @@ export class CompanyService {
     const company = await this.companyRepository.create(data, file, logoImage);
 
     return company;
+  }
+
+  async delete(data: DeleteCompanyDto) {
+    await this.companyRepository.delete(data);
   }
 
   async findAll() {

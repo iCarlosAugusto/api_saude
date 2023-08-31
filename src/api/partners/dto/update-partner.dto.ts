@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { ArrayMinSize, IsArray, IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UpdatePartnerDto {
   
@@ -37,4 +37,10 @@ export class UpdatePartnerDto {
   @IsOptional()
   @IsString()
   photo: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  @ArrayMinSize(1)
+  categories: string[];
 }

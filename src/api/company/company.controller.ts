@@ -5,6 +5,7 @@ import { CreateCompanyDto } from './dtos/create-company.dto';
 import { FindCompanyByPartnerIdDto } from './dtos/find-company-by-id.dto';
 import { FindCompaniesByDateDto } from './dtos/find-companies-by-date.dto';
 import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
+import { DeleteCompanyDto } from './dtos/delete-company.dto';
 
 @Controller('/company')
 export class CompanyController {
@@ -18,8 +19,11 @@ export class CompanyController {
   uploadFile(@UploadedFiles() files: { avatar?: Express.Multer.File[], background?: Express.Multer.File[] }) {
     console.log(files);
   }
-  
 
+  @Post("/delete")
+  delete(@Body() deleteCompanyDto: DeleteCompanyDto) {
+    this.companyService.delete(deleteCompanyDto);
+  }
 
   @Post('/create')
   @UseInterceptors(FileFieldsInterceptor([

@@ -11,7 +11,7 @@ export class CreatePartnerDto {
   identification: string;
 
   @IsString()
-  @IsEmail({}, { message: 'Email inválido' })
+@IsEmail({}, { message: 'Email inválido' })
   email: string;
 
   @IsString()
@@ -29,6 +29,10 @@ export class CreatePartnerDto {
   @IsString()
   @IsNotEmpty({ message: 'O número é obrigatória' })
   phoneNumber: string;
+
+  @IsString()
+  @IsOptional()
+  photo?: string;
 
   @IsArray()
   @IsString({ each: true })
