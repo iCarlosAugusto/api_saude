@@ -13,6 +13,9 @@ model Partner {
   createdAt      DateTime  @default(now())
   identification String    @unique
   regiterCode    String    @unique
+  description    String 
+  consultTimeMedium  String
+  consultPriceMedium String 
   name           String
   email          String
   photo          String?
