@@ -4,6 +4,7 @@ CREATE TABLE "partners" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "identification" TEXT NOT NULL,
     "regiterCode" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "photo" TEXT,
