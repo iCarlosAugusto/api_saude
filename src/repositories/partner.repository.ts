@@ -35,6 +35,9 @@ export class PartnerRepository {
         photo: data.photo,
         phoneNumber: data.phoneNumber,
         categories: data.categories,
+        consultPriceMedium: data.consultPriceMedium,
+        consultTimeMedium: data.consultPriceMedium,
+        description: data.description
       },
     });
     await this.emailService.sendEmailToResetPassword({
