@@ -44,6 +44,10 @@ export class CreatePartnerDto {
 
   @IsString()
   @IsNotEmpty()
+  speciality: string;
+
+  @IsString()
+  @IsNotEmpty()
   consultPriceMedium: string;
    
   @IsArray()
