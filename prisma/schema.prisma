@@ -14,6 +14,7 @@ model Partner {
   identification String    @unique
   regiterCode    String    @unique
   description    String 
+  speciality      String
   consultTimeMedium  String
   consultPriceMedium String 
   name           String
