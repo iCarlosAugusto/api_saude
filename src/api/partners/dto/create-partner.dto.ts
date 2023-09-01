@@ -34,6 +34,18 @@ export class CreatePartnerDto {
   @IsOptional()
   photo?: string;
 
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
+  @IsString()
+  @IsNotEmpty()
+  consultTimeMedium: string;
+
+  @IsString()
+  @IsNotEmpty()
+  consultPriceMedium: string;
+   
   @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)
