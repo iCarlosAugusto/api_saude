@@ -1,9 +1,8 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-import { NewsEntity } from './entities/news.entity';
 import { NewsService } from './news.service';
 import { Body, Controller, Get, HttpException, HttpStatus, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { CreateNewsDto } from './dtos/create-news.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { DeleteNewsDto } from './dtos/delete-news.dto';
 
 @Controller('/news')
 export class NewsController {
@@ -13,19 +12,19 @@ export class NewsController {
   @Post('/create')
   createNews(
     @Body() createNewsDto: CreateNewsDto,
-    @UploadedFile() file: Express.Multer.File,
   ) {
-    if(!file) {
-      throw new HttpException(
-        'Faltando o arquivo de imagem',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-    return this.newsService.create(createNewsDto, file);
+    return this.newsService.create(createNewsDto);
   }
 
   @Post('/findAll')
   async findNews() {
     return await this.newsService.findAll();
+  }
+
+  @Post("/delete")
+  async delete(
+    @Body() deleteNewsDto: DeleteNewsDto
+  ) {
+    return await this.newsService.delete(deleteNewsDto);
   }
 }
