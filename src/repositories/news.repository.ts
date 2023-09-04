@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateNewsDto } from 'src/api/news/dtos/create-news.dto';
+import { DeleteNewsDto } from 'src/api/news/dtos/delete-news.dto';
 import { PrismaService } from 'src/api/users/services/prima.service';
 import { saveToBucket } from 'src/utils/saveToBucket';
 
@@ -7,19 +8,23 @@ import { saveToBucket } from 'src/utils/saveToBucket';
 export class NewsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create({ title, description }: CreateNewsDto, file: Express.Multer.File,){
-    const url = await saveToBucket(file);
+  async create(data: CreateNewsDto){
+    //const url = await saveToBucket(file);
     return await this.prisma.news.create({
-      data: {
-        title,
-        description,
-        imageUrl: url
-      }
+      data: data
     });
   }
 
   async findAll() {
     return await this.prisma.news.findMany();
+  }
+
+  async delete({ id }: DeleteNewsDto) {
+    return await this.prisma.news.delete({
+      where: {
+        id
+      }
+    })
   }
 }
 
