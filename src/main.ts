@@ -16,6 +16,8 @@ async function bootstrap() {
     }),
     storageBucket: "gs://push-saude-club.appspot.com"
   });
-  await app.listen(3030);
+  const port = process.env.PORT || 3000;
+  console.log("######################################################################A PORTA É :", port)
+  await app.listen(port, "0.0.0.0");
 }
 bootstrap();
